@@ -1,15 +1,22 @@
 Margin Computation for IRV Elections
 ------------------------------------
 
-USAGE: marginirv -ballots [ballot file] [-score] [-tight] [-simlog] [-optlog]
-	[-tlimit value] [-logfile logfilename] [-electonly N parties]
+USAGE: 
+marginirv -ballots [ballot file] [-score] [-tight] [-simlog] [-optlog]
+    [-tlimit value] [-logfile logfilename] [-electonly N parties]
 
  -score:     Apply basic scoring rules to prune search
+ 
  -tight:     Apply tighter scoring rules to prune search (supercedes score)
+ 
  -simlog:    Print details of IRV simulation of original election to stdout
+ 
  -optlog:    Print CPLEX solving information to logfile
+ 
  -tlimit:    Timelimit (in s) after which branch and bound will terminate
+ 
  -logfile:   File to direct search log
+ 
  -electonly: [optional] 
              N (number of alternative winners we want to consider)
              Party1 Party2 ... PartyN
