@@ -2,6 +2,7 @@ Margin Computation for IRV Elections
 ------------------------------------
 
 USAGE: 
+
 marginirv -ballots [ballot file] [-score] [-tight] [-simlog] [-optlog]
     [-tlimit value] [-logfile logfilename] [-electonly N parties]
 
