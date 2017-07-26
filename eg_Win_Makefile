@@ -1,0 +1,69 @@
+PROGRAM = marginirv
+
+RM = rm -rf
+OBJDIR = obj
+
+VC2011="C:/Program Files (x86)/Microsoft Visual Studio 14.0"
+WINSDKINC="C:/Program Files/Microsoft SDKs/Windows/v7.1/Include"	
+WINSDKLIB="C:/Program Files/Microsoft SDKs/Windows/v7.1/Lib/x64"	
+BOOST="C:/boost_1_60_0/boost_1_60_0"
+TCPLEXLIB="C:\IBM\ILOG\CPLEX_Studio1271\cplex\lib\x64_windows_vs2015\stat_mda"
+TCONCERTLIB="C:\IBM\ILOG\CPLEX_Studio1271\concert\lib\x64_windows_vs2015\stat_mda"
+TCPLEX1="C:\IBM\ILOG\CPLEX_Studio1271\cplex\include"	
+TCPLEX2="C:\IBM\ILOG\CPLEX_Studio1271\concert\include"
+
+BASEDIRS = \
+	-I. \
+	-I$(TCPLEX1) \
+	-I$(TCPLEX2)
+
+INCLUDEDIRS = $(BASEDIRS)
+
+CXX = cl.exe
+LD = -link
+SUFFIX = obj
+
+INCLUDEDIRS = $(BASEDIRS) \
+	-I$(BOOST) \
+	-I$(VC2011)/VC/include \
+	-I$(WINSDKINC) \
+	-I$(VC2011)/Common7/IDE \
+	-I"C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt"	
+
+CXXFLAGS = $(INCLUDEDIRS) //O2 -DNEBUG -DIL_STD //EHsc  //MD
+
+LDFLAGS = -LIBPATH:$(VC2011)/VC/lib/amd64 \
+	-LIBPATH:$(WINSDKLIB) \
+	-LIBPATH:$(VC2011)/Common7/IDE \
+	-LIBPATH:$(BOOST)/stage/lib libboost_filesystem-vc140-mt-1_60.lib \
+	-LIBPATH:$(BOOST)/stage/lib libboost_system-vc140-mt-1_60.lib \
+	-LIBPATH:$(TCPLEXLIB) ilocplex.lib cplex1271.lib \
+	-LIBPATH:$(TCONCERTLIB) concert.lib //machine:x64 \
+	-LIBPATH:"C:\Program Files (x86)\Windows Kits\10\Lib\10.0.10240.0\um\x64" \
+	-LIBPATH:"C:\Program Files (x86)\Windows Kits\10\Lib\10.0.10240.0\ucrt\x64"
+
+RENAME = -Fo
+
+CXXSOURCES = \
+	marginirv.cpp \
+	sim_irv.cpp \
+	model.cpp \
+	tree_irv.cpp \
+	irv_distance.cpp 
+	
+CXXOBJECTS = $(patsubst %.cpp, $(OBJDIR)/%.$(SUFFIX), $(CXXSOURCES))
+
+all : $(PROGRAM)
+
+$(PROGRAM) : $(CXXOBJECTS)
+	$(CXX) -o $@ $(CXXOBJECTS) $(LD) $(LDFLAGS) 
+
+$(OBJDIR)/%.$(SUFFIX) : %.cpp
+	@mkdir -p $(@D)
+	$(CXX)  $(RENAME)$(@D)/$(@F) -c $(<) $(CXXFLAGS)
+
+clean:
+	$(RM) $(CXXOBJECTS) $(PROGRAM) $(OBJDIR)
+
+
+
