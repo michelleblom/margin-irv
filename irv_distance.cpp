@@ -250,13 +250,23 @@ double distance(const Ballots &ballots, const Candidates &cand,
 			// p_s variable: number of ballots modified so that their
 			// new signature is 's' 
 			sprintf(varname, "vps_%d", i);
-			ps[i] = IloNumVar(env, 0, ub, ILOFLOAT, varname);
+			if(ncand == config.ncandidates){
+				ps[i] = IloNumVar(env, 0, ub, ILOINT, varname);
+			}
+			else{
+				ps[i] = IloNumVar(env, 0, ub, ILOFLOAT, varname);
+			}
 
 			// m_s variable: number of ballots whose signature in the
 			// original profile is 's', but are modified to something 
 			// other than 's' in the new profile
 			sprintf(varname, "vms_%d", i);
-		    ms[i] = IloNumVar(env, 0, min(ns, ub), ILOFLOAT, varname);
+			if(ncand == config.ncandidates){
+		    	ms[i] = IloNumVar(env, 0, min(ns, ub), ILOINT, varname);
+			}
+			else{
+		    	ms[i] = IloNumVar(env, 0, min(ns, ub), ILOFLOAT, varname);
+			}
 
 			// y_s variable: total number of ballots with signature 's'
 			// in the new election profile
