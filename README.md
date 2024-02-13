@@ -1,7 +1,15 @@
 Margin Computation for IRV Elections
 ------------------------------------
 
-USAGE: 
+Installation
+------------
+Install dependencies, including [IBM ILOG CPLEX Optimization Studio](https://www.ibm.com/products/ilog-cplex-optimization-studio).
+Note the no-cost edition for researchers, students and teachers.
+
+Run `make` to build the source code.
+
+USAGE
+-----
 
 marginirv -ballots [ballot file] [-score] [-tight] [-simlog] [-optlog]
     [-tlimit value] [-logfile logfilename] [-electonly N parties]
